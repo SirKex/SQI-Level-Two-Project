@@ -25,6 +25,10 @@ logIn.addEventListener("click", function (ev) {
         .then((userCredential) => {
             const user = userCredential.user;
             alert("Log In successful")
+
+            
+
+
             window.location.href = "Dashboard.html";
         })
         .catch((error) => {

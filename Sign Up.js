@@ -34,6 +34,7 @@ createAccount.addEventListener("click", function (ev) {
         email: emailAddress.value,
         password: passWord.value,
         confirmPassword: confirmPassword.value,
+        acctNumber: "",
     };
     if (UserInformation.password === "") {
         return alert("Password invalid");
@@ -44,7 +45,6 @@ createAccount.addEventListener("click", function (ev) {
     } 
 
     console.log("UserInformation : ", UserInformation);
-    localStorage.setItem("UserInformation", JSON.stringify(UserInformation));
 
     const email = document.getElementById("emailAddress").value;
     const password = document.getElementById("passWord").value;
@@ -55,19 +55,8 @@ createAccount.addEventListener("click", function (ev) {
             console.log("User Info : ", user);
             alert("User signed up successfully");
             window.location.href = "Loading.html";
-
-            set(ref(db, "userInformation/" + UserInformation.firstName), UserInformation)
-                .then(() => {
-                    firstName.value = "",
-                        lastName.value = "",
-                        emailAddress.value = "";
-                    passWord.value = "";
-                    confirmPassword.value = "";
-                })
-                .catch((error) => {
-                    alert("Error Occured while saving data");
-                });
             console.log(UserInformation);
+            localStorage.setItem("UserInformation", JSON.stringify(UserInformation));
         })
         .catch((error) => {
             if (error.code === "auth/email-already-in-use") {
