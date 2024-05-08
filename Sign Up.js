@@ -1,5 +1,4 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -14,7 +13,6 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
 const auth = getAuth(app);
 let createAccount = document.getElementById("createAccount");
 
@@ -24,6 +22,7 @@ createAccount.addEventListener("click", function (ev) {
 
     let firstName = document.getElementById("firstName");
     let lastName = document.getElementById("lastName");
+    let userName = document.getElementById("userName");
     let emailAddress = document.getElementById("emailAddress");
     let passWord = document.getElementById("passWord");
     let confirmPassword = document.getElementById("confirmPassword");
@@ -32,6 +31,7 @@ createAccount.addEventListener("click", function (ev) {
         firstName: firstName.value,
         lastName: lastName.value,
         email: emailAddress.value,
+        userName: userName.value,
         password: passWord.value,
         confirmPassword: confirmPassword.value,
         acctNumber: "",
@@ -44,7 +44,7 @@ createAccount.addEventListener("click", function (ev) {
         return alert("Password must be a minimum of 8 characters")
     } 
 
-    console.log("UserInformation : ", UserInformation);
+    // console.log("UserInformation : ", UserInformation);
 
     const email = document.getElementById("emailAddress").value;
     const password = document.getElementById("passWord").value;
@@ -52,10 +52,10 @@ createAccount.addEventListener("click", function (ev) {
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             const user = userCredential.user;
-            console.log("User Info : ", user);
+            // console.log("User Info : ", user);
             alert("User signed up successfully");
             window.location.href = "Loading.html";
-            console.log(UserInformation);
+            // console.log(UserInformation);
             localStorage.setItem("UserInformation", JSON.stringify(UserInformation));
         })
         .catch((error) => {

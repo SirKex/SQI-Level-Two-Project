@@ -1,5 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import { getDatabase, onValue, ref } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBs8xzZ_NImJb45cGgURPSfsYP42hn5yNw",
@@ -14,26 +15,28 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getDatabase(app);
 
 logIn.addEventListener("click", function (ev) {
     ev.preventDefault();
 
     const email = document.getElementById("emailAddress").value;
     const password = document.getElementById("passWord").value;
+    const userName = document.getElementById("userName").value;
 
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             const user = userCredential.user;
             alert("Log In successful")
 
-            
-
-
-            window.location.href = "Dashboard.html";
+            const userRef = ref(db, `UserDetails/${userName}`)
+            onValue(userRef, (userInfo) => {
+                const userdetails = userInfo.val()
+                localStorage.setItem("UserInformation", JSON.stringify(userdetails))
+            })
+            setInterval(() => {
+                window.location.href = "Dashboard.html";
+            }, 2000)
         })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            alert("Could not sign in User")
-        });
-});
+})
+

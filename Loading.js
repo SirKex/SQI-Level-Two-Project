@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBs8xzZ_NImJb45cGgURPSfsYP42hn5yNw",
@@ -12,9 +12,7 @@ const firebaseConfig = {
     measurementId: "G-XSLF84G9DK"
 };
 
-let loadIng = document.getElementById("loadIng")
 let userDisplay = document.getElementById("userDisplay")
-// let divLoad = document.getElementById("divLoad")
 let acctNo = document.getElementById("acctNo")
 
 const app = initializeApp(firebaseConfig);
@@ -24,7 +22,7 @@ window.addEventListener('load', function (ev) {
     ev.preventDefault()
 
     let user = JSON.parse(localStorage.getItem('UserInformation'));
-    console.log(user)
+    // console.log(user)
     userDisplay.innerHTML = `Hello, Mr. ${user.lastName}`
 
     if (user.acctNumber > 8) {
@@ -32,7 +30,7 @@ window.addEventListener('load', function (ev) {
     }
     else if (acctNo.innerHTML < 8) {
         let user = JSON.parse(localStorage.getItem('UserInformation'));
-        console.log(user)
+        // console.log(user)
         userDisplay.innerHTML = `Hello, Mr. ${user.lastName}`
 
         let firstInterval = setInterval(() => {
@@ -42,14 +40,13 @@ window.addEventListener('load', function (ev) {
             let UserInformation = {
                 firstName: user.firstName,
                 lastName: user.lastName,
+                userName: user.userName,
                 email: user.email,
                 password: user.password,
                 acctNumber: x,
             };
-
-            console.log(UserInformation);
-
-            set(ref(db, "UserInfo/" + UserInformation.lastName), UserInformation)
+            // console.log(UserInformation);
+            set(ref(db, "UserDetails/" + UserInformation.userName), UserInformation)
                 .then(() => {
                     alert("User Information saved")
                 })
@@ -67,8 +64,6 @@ window.addEventListener('load', function (ev) {
     }
 
 })
-
-let nextBtn = document.getElementById("nextBtn")
 
 nextBtn.addEventListener('click', () => {
     window.location.href = "Dashboard.html";
