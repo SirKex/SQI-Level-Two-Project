@@ -44,6 +44,7 @@ window.addEventListener('load', function (ev) {
                 email: user.email,
                 password: user.password,
                 acctNumber: x,
+                acctBalance: 20000,
             };
             // console.log(UserInformation);
             set(ref(db, "UserDetails/" + UserInformation.userName), UserInformation)
