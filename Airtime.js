@@ -35,8 +35,10 @@ let topUp = document.getElementById("topUp");
 topUp.addEventListener('click', function () {
     if (phoneNo.length < 10) {
         return alert ("Phone number is not valid")
-    } if (airTime.value < 50) {
+    } else if (airTime.value < 50) {
         return alert ("Amount cannot be less than #50")
+    } else if (airTime.value > acctBalance) {
+        return alert ("Insufficient funds")
     }
 
     let newBalance = acctBalance - airTime.value
