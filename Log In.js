@@ -35,9 +35,9 @@ logIn.addEventListener("click", function (ev) {
                     console.log("Userdetails:", userdetails);
 
                     function findUserByEmail(email) {
-                        for (const username in userdetails[0]) {
-                            if (userdetails[0].hasOwnProperty(username)) {
-                                const user = userdetails[0][username];
+                        for (const lastName in userdetails[0]) {
+                            if (userdetails[0].hasOwnProperty(lastName)) {
+                                const user = userdetails[0][lastName];
                                 if (user.email.toString() === email) {
                                     return user;
                                 }

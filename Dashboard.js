@@ -20,11 +20,11 @@ let imgOne = document.getElementById("imgOne");
 let settIngs = document.getElementById("settIngs");
 
 let user = JSON.parse(localStorage.getItem("UserInformation"));
-// console.log(user)
-const userName = user.userName;
+console.log(user)
+const lastName = user.lastName;
 userDisplay.innerHTML = `Hi, Mr. ${user.lastName}`;
 
-const userRef = ref(db, `UserDetails/${userName}`)
+const userRef = ref(db, `UserDetails/${lastName}`)
 onValue(userRef, (userInfo) => {
     const userdetails = userInfo.val()
     localStorage.setItem("UserInformation", JSON.stringify(userdetails))

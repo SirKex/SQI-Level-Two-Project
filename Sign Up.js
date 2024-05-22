@@ -30,14 +30,16 @@ createAccount.addEventListener("click", function (ev) {
         firstName: firstName.value,
         lastName: lastName.value,
         email: emailAddress.value,
+        acctNumber: ""
     };
+
     if (passWord.value === "") {
-        return alert("Password invalid");
-    }else if (passWord.value !== confirmPassword.value) {
+    return alert("Password invalid");
+    } else if (passWord.value !== confirmPassword.value) {
         return alert("Password does not match");
     } else if (passWord.value.length < 8) {
-        return alert("Password must be a minimum of 8 characters")
-    } 
+        return alert("Password must be a minimum of 8 characters");
+    }
 
     // console.log("UserInformation : ", UserInformation);
 

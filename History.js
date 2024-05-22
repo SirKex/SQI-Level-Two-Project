@@ -28,7 +28,6 @@ const transactionList = document.getElementById("transactionList");
 const transactionsRef = ref(db, `TransactionHistory/${userName}`)
 onValue(transactionsRef, (tranHistory) => {
     const transactions = tranHistory.val()
-    console.log(transactions)
     if (transactions) {
         Object.values(transactions).forEach(transaction => {
             const transactionItem = document.createElement("div");
@@ -42,15 +41,12 @@ onValue(transactionsRef, (tranHistory) => {
                 `;
                 transactionList.appendChild(transactionItem);
             });
-        } else {
-            transactionList.innerHTML = "<p>No transactions found.</p>";
         }
 });
 
 const airtimeRef = ref(db, `AirtimeHistory/${userName}`)
 onValue(airtimeRef, (tranHistory) => {
     const trans = tranHistory.val()
-    console.log(trans)
     if (trans) {
         Object.values(trans).forEach(transaction => {
             const airtimeItem = document.createElement("div");

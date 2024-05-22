@@ -57,15 +57,18 @@ swiftPay.addEventListener('click', function () {
     selectBank.innerHTML = "SwiftPay"
 })
 
+let userInt = JSON.parse(localStorage.getItem("UserInformation"));
+
 checkUser.addEventListener('click', function () {
     const acctNumber = acctNo.value;
 
     if (selectBank.innerHTML !== "SwiftPay") {
         acctName.innerHTML = "";
         return alert ("User not found")
-    }
-    else if (acctNumber.length < 9) {
+    } else if (acctNumber.length < 9) {
         return alert("Recepient account number is invalid")
+    } else if (acctNumber === user.acctNumber) {
+        return alert ("Cannot transfer to same account")
     }
 
     console.log("AcctNo:", acctNumber);
@@ -76,9 +79,9 @@ checkUser.addEventListener('click', function () {
         console.log("Userdetails:", userdetails);
 
         function findUserByAcctNumber(acctNumber) {
-            for (const email in userdetails[0]) {
-                if (userdetails[0].hasOwnProperty(email)) {
-                    const user = userdetails[0][email];
+            for (const lastName in userdetails[0]) {
+                if (userdetails[0].hasOwnProperty(lastName)) {
+                    const user = userdetails[0][lastName];
                     if (user.acctNumber.toString() === acctNumber) {
                         return user;
                     }

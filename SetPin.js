@@ -27,25 +27,23 @@ window.addEventListener('load', function (ev) {
     nextBtn.addEventListener('click', () => {
         const tranPin = Pin.value;
 
-        let UserInformation = {
-            firstName: user.firstName,
-            lastName: user.lastName,
-            userName: user.userName,
-            email: user.email,
-            password: user.password,
-            acctNumber: user.acctNumber,
-            acctBalance: user.acctBalance,
-            transactionPin: tranPin
-        }; 
+        if (tranPin.length < 4) {
+            return alert("Pin should be at least four digits")
+        } else {
+            let UserInformation = {
+                ...user,
+                transactionPin: tranPin
+            };
         
-        localStorage.setItem("UserInformation", JSON.stringify(UserInformation));
+            localStorage.setItem("UserInformation", JSON.stringify(UserInformation));
 
-        set(ref(db, "UserDetails/" + UserInformation.userName), UserInformation)
+            set(ref(db, "UserDetails/" + UserInformation.lastName), UserInformation)
                 .then(() => {
                     window.location.href = "Dashboard.html";
                 })
                 .catch((error) => {
                     alert("Error Occured while saving data");
                 });
+        }
     })
 })

@@ -25,32 +25,33 @@ window.addEventListener('load', function (ev) {
     // console.log(user)
     userDisplay.innerHTML = `Hello, Mr. ${user.lastName}`
     console.log(user.acctNumber)
-    const acctNumber = `${user.acctNumber}`
+    const acctNumber = user.acctNumber
+    console.log(acctNumber)
 
-    if (acctNumber.length > 8) {
+    if (acctNumber && acctNumber.toString().length > 8) {
         acctNo.innerHTML = acctNumber;
-    } else if (acctNumber.length < 8) {
+    } else {
         let firstInterval = setInterval(() => {
             let x = Math.floor((Math.random(0o0) * 999999999) + 1);
             acctNo.innerHTML = x;
 
-            let UserInformation = {
+            let updatedUser = {
                 ...user,
                 acctNumber: x,
                 acctBalance: 20000,
             };
 
             // console.log(UserInformation);
-            set(ref(db, "UserDetails/" + UserInformation.userName), UserInformation)
+            set(ref(db, "UserDetails/" + updatedUser.lastName), updatedUser)
                 .then(() => {
                     alert("User Information saved")
-                    console.log(UserInformation)
+                    console.log(updatedUser)
                 })
                 .catch((error) => {
-                    alert("Error Occured while saving data");
+                    console.log(error);
                 });
 
-            localStorage.setItem("UserInformation", JSON.stringify(UserInformation));
+            localStorage.setItem("UserInformation", JSON.stringify(updatedUser));
         }, 3000)
 
 
