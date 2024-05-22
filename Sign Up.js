@@ -22,7 +22,6 @@ createAccount.addEventListener("click", function (ev) {
 
     let firstName = document.getElementById("firstName");
     let lastName = document.getElementById("lastName");
-    let userName = document.getElementById("userName");
     let emailAddress = document.getElementById("emailAddress");
     let passWord = document.getElementById("passWord");
     let confirmPassword = document.getElementById("confirmPassword");
@@ -31,16 +30,12 @@ createAccount.addEventListener("click", function (ev) {
         firstName: firstName.value,
         lastName: lastName.value,
         email: emailAddress.value,
-        userName: userName.value,
-        password: passWord.value,
-        confirmPassword: confirmPassword.value,
-        acctNumber: "",
     };
-    if (UserInformation.password === "") {
+    if (passWord.value === "") {
         return alert("Password invalid");
-    }else if (UserInformation.password !== UserInformation.confirmPassword) {
+    }else if (passWord.value !== confirmPassword.value) {
         return alert("Password does not match");
-    } else if (UserInformation.password.length < 8) {
+    } else if (passWord.value.length < 8) {
         return alert("Password must be a minimum of 8 characters")
     } 
 

@@ -22,21 +22,40 @@ logIn.addEventListener("click", function (ev) {
 
     const email = document.getElementById("emailAddress").value;
     const password = document.getElementById("passWord").value;
-    const userName = document.getElementById("userName").value;
 
-    signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            const user = userCredential.user;
-            alert("Log In successful")
+    
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                alert("Log In successful")
 
-            const userRef = ref(db, `UserDetails/${userName}`)
-            onValue(userRef, (userInfo) => {
-                const userdetails = userInfo.val()
-                localStorage.setItem("UserInformation", JSON.stringify(userdetails))
+                const userRef = ref(db, `UserDetails`)
+                onValue(userRef, (userInfo) => {
+                    const userdetails = [userInfo.val()]
+                    console.log("Userdetails:", userdetails);
+
+                    function findUserByEmail(email) {
+                        for (const username in userdetails[0]) {
+                            if (userdetails[0].hasOwnProperty(username)) {
+                                const user = userdetails[0][username];
+                                if (user.email.toString() === email) {
+                                    return user;
+                                }
+                            }
+                        }
+                        return null;
+                    }
+
+                    const foundUser = findUserByEmail(email);
+                    console.log("Found User:", foundUser);
+
+                    localStorage.setItem("UserInformation", JSON.stringify(foundUser))
+
+                    setInterval(() => {
+                        window.location.href = "Dashboard.html";
+                    }, 2000)
+                })
+            
             })
-            setInterval(() => {
-                window.location.href = "Dashboard.html";
-            }, 2000)
-        })
 })
 

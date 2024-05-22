@@ -21,7 +21,6 @@ backArrow.addEventListener('click', function () {
     window.location.href = "Dashboard.html"
 });
 
-// const acctNo = "834513698";
 const acctNo = document.getElementById("acctNo");
 let checkUser = document.getElementById("checkUser");
 let transFer = document.getElementById("transFer");
@@ -77,9 +76,9 @@ checkUser.addEventListener('click', function () {
         console.log("Userdetails:", userdetails);
 
         function findUserByAcctNumber(acctNumber) {
-            for (const username in userdetails[0]) {
-                if (userdetails[0].hasOwnProperty(username)) {
-                    const user = userdetails[0][username];
+            for (const email in userdetails[0]) {
+                if (userdetails[0].hasOwnProperty(email)) {
+                    const user = userdetails[0][email];
                     if (user.acctNumber.toString() === acctNumber) {
                         return user;
                     }

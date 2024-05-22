@@ -35,11 +35,7 @@ window.addEventListener('load', function (ev) {
             acctNo.innerHTML = x;
 
             let UserInformation = {
-                firstName: user.firstName,
-                lastName: user.lastName,
-                userName: user.userName,
-                email: user.email,
-                password: user.password,
+                ...user,
                 acctNumber: x,
                 acctBalance: 20000,
             };

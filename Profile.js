@@ -19,7 +19,6 @@ fullName.innerHTML = `${user.firstName} ${user.lastName}`
 FullName.innerHTML = `${user.firstName} ${user.lastName}`
 acctNo.innerHTML = `${user.acctNumber}`
 tranPin.innerHTML = `${user.tranPin}`
-userName.innerHTML = `${user.userName}`
 emailAdd.innerHTML = `${user.email}`
 
 let logOut = document.getElementById("logOut")
