@@ -1,3 +1,20 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBs8xzZ_NImJb45cGgURPSfsYP42hn5yNw",
+    authDomain: "sqi-level-two-project.firebaseapp.com",
+    databaseURL: "https://sqi-level-two-project-default-rtdb.firebaseio.com",
+    projectId: "sqi-level-two-project",
+    storageBucket: "sqi-level-two-project.appspot.com",
+    messagingSenderId: "543903052576",
+    appId: "1:543903052576:web:e276b5d2b7175fcabddd45",
+    measurementId: "G-XSLF84G9DK"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
 let backArrow = document.getElementById("backArrow");
 
 backArrow.addEventListener('click', function () {
@@ -47,7 +64,6 @@ topUp.addEventListener('click', function () {
     }
 
     let newBalance = acctBalance - airTime.value
-    alert ("Your airtime purchase is successful")
 
      let UserInformation = {
         firstName: user.firstName,
@@ -60,4 +76,12 @@ topUp.addEventListener('click', function () {
         transactionPin: user.transactionPin
     };
     localStorage.setItem("UserInformation", JSON.stringify(UserInformation))
+
+    set(ref(db, "UserDetails/" + UserInformation.userName), UserInformation)
+    .then(() => {
+        window.location.href = "TranSuccess.html"
+    }) .catch((error) => {
+        console.log(error)
+        return alert("Transfer failed")
+    });
 })

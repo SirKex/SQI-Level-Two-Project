@@ -76,8 +76,7 @@ transFer.addEventListener('click', function () {
                 
     set(ref(db, "UserDetails/" + newInformation.userName), newInformation)
     .then(() => {
-        alert("Transfer successful")
-        window.location.href = "Dashboard.html"
+        window.location.href = "TranSuccess.html"
     }) .catch((error) => {
         console.log(error)
         return alert("Transfer failed")
