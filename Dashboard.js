@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import { getDatabase, onValue, ref, set } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBs8xzZ_NImJb45cGgURPSfsYP42hn5yNw",
@@ -20,7 +20,16 @@ let imgOne = document.getElementById("imgOne")
 
 let user = JSON.parse(localStorage.getItem("UserInformation"));
 // console.log(user)
-userDisplay.innerHTML = `Hi, Mr. ${user.lastName}`
+const userName = user.userName;
+userDisplay.innerHTML = `Hi, Mr. ${user.lastName}`;
+
+const userRef = ref(db, `UserDetails/${userName}`)
+onValue(userRef, (userInfo) => {
+    const userdetails = userInfo.val()
+    localStorage.setItem("UserInformation", JSON.stringify(userdetails))
+    let balAnce = document.getElementById("balAnce");
+    balAnce.innerHTML = userdetails.acctBalance; 
+})
 
 imgOne.addEventListener('click', function() {
     window.location.href = "Profile.html"
@@ -30,10 +39,9 @@ window.addEventListener('load', function () {
     showPass.style.display = "none"
 })
 
-let balAnce = document.getElementById("balAnce");
+
 let hidePass = document.getElementById("hidePass");
 let showPass = document.getElementById("showPass");
-balAnce.innerHTML = user.acctBalance; 
 
 
 hidePass.addEventListener('click', function () {

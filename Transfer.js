@@ -21,19 +21,83 @@ backArrow.addEventListener('click', function () {
     window.location.href = "Dashboard.html"
 });
 
-let acctNo = document.getElementById("acctNo").value
-let transFer = document.getElementById("transFer")
+const acctNo = "834513698";
+// const acctNo = document.getElementById("acctNumber").value;
+let checkUser = document.getElementById("checkUser");
+let transFer = document.getElementById("transFer");
+let acctName = document.getElementById("acctName");
+let selectBank = document.getElementById("selectBank")
+let swiftPay = document.getElementById("swiftPay");
+let firstBank = document.getElementById("firstBank");
+let gtBank = document.getElementById("gtBank");
+let kudaBank = document.getElementById("kudaBank");
+let oPay = document.getElementById("oPay");
+let palmPay = document.getElementById("palmPay");
 
-transFer.addEventListener('click', function () {
-    if (acctNo.length < 9) {
-        return alert ("Recepient account number is invalid")
-    }
-
-    const userRef = ref(db, `UserDetails/${userName}`)
-    onValue(userRef, (userInfo) => {
-        const userdetails = userInfo.val()
-        localStorage.setItem("UserInformation", JSON.stringify(userdetails))
-    })
-
-    
+firstBank.addEventListener('click', function () {
+    selectBank.innerHTML = "First Bank PLC"
 })
+
+kudaBank.addEventListener('click', function () {
+    selectBank.innerHTML = "Kuda Bank"
+})
+
+gtBank.addEventListener('click', function () {
+    selectBank.innerHTML = "Guaranty Trust Bank"
+})
+
+oPay.addEventListener('click', function () {
+    selectBank.innerHTML = "Paycom (OPay)"
+})
+
+palmPay.addEventListener('click', function () {
+    selectBank.innerHTML = "palmPay"
+})
+
+swiftPay.addEventListener('click', function () {
+    selectBank.innerHTML = "SwiftPay"
+})
+
+checkUser.addEventListener('click', function () {
+    if (selectBank.innerHTML !== "SwiftPay") {
+        acctName.innerHTML = "";
+        return alert ("User not found")
+    }
+    // else if (acctNo.length < 9) {
+    //     return alert("Recepient account number is invalid")
+    // }
+
+    console.log("AcctNo:", acctNo);
+
+    const userRef = ref(db, `UserDetails`)
+    onValue(userRef, (userInfo) => {
+        const userdetails = [userInfo.val()]
+        console.log("Userdetails:", userdetails);
+
+        function findUserByAcctNumber(acctNumber) {
+            for (const username in userdetails[0]) {
+                if (userdetails[0].hasOwnProperty(username)) {
+                    const user = userdetails[0][username];
+                    if (user.acctNumber.toString() === acctNumber) {
+                        return user;
+                    }
+                }
+            }
+            return null;
+        }
+
+        const foundUser = findUserByAcctNumber(acctNo);
+        console.log("Found User:", foundUser);
+        acctName.innerHTML = `${foundUser.firstName} ${foundUser.lastName}`;
+
+        localStorage.setItem("foundUser", JSON.stringify(foundUser))
+    });
+
+    transFer.addEventListener('click', function () {
+            if (acctName.innerHTML.length < 5) {
+                return alert("Please check user first");
+            } else {
+                window.location.href = "Transfer2.html";
+            }
+        });
+});
