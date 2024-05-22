@@ -32,7 +32,7 @@ logIn.addEventListener("click", function (ev) {
                 const userRef = ref(db, `UserDetails`)
                 onValue(userRef, (userInfo) => {
                     const userdetails = [userInfo.val()]
-                    console.log("Userdetails:", userdetails);
+                    // console.log("Userdetails:", userdetails);
 
                     function findUserByEmail(email) {
                         for (const lastName in userdetails[0]) {
@@ -47,7 +47,7 @@ logIn.addEventListener("click", function (ev) {
                     }
 
                     const foundUser = findUserByEmail(email);
-                    console.log("Found User:", foundUser);
+                    // console.log("Found User:", foundUser);
 
                     localStorage.setItem("UserInformation", JSON.stringify(foundUser))
 

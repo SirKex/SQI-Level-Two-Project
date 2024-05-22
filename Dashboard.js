@@ -20,7 +20,7 @@ let imgOne = document.getElementById("imgOne");
 let settIngs = document.getElementById("settIngs");
 
 let user = JSON.parse(localStorage.getItem("UserInformation"));
-console.log(user)
+// console.log(user)
 const lastName = user.lastName;
 userDisplay.innerHTML = `Hi, Mr. ${user.lastName}`;
 
@@ -29,7 +29,7 @@ onValue(userRef, (userInfo) => {
     const userdetails = userInfo.val()
     localStorage.setItem("UserInformation", JSON.stringify(userdetails))
     let balAnce = document.getElementById("balAnce");
-    console.log(userdetails)
+    // console.log(userdetails)
     balAnce.innerHTML = userdetails.acctBalance; 
 })
 

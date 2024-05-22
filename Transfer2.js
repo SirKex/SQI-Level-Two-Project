@@ -22,11 +22,11 @@ backArrow.addEventListener('click', function () {
 });
 
 let foundUser = JSON.parse(localStorage.getItem("foundUser"));
-console.log(foundUser);
+// console.log(foundUser);
 const balance = foundUser.acctBalance;
 
 let user = JSON.parse(localStorage.getItem("UserInformation"));
-console.log(user);
+// console.log(user);
 const userBalance = user.acctBalance;
 
 let amountInput = document.getElementById("amount");
@@ -72,14 +72,14 @@ transFer.addEventListener('click', function () {
             const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
             const yyyy = today.getFullYear();
             const formattedDate = mm + '/' + dd + '/' + yyyy;
-            console.log('Current date:', formattedDate);
+            // console.log('Current date:', formattedDate);
 
             const date = new Date();
             const currentHours = date.getHours();
             const currentMinutes = date.getMinutes();
             const currentSeconds = date.getSeconds();
             const formattedTime = `${currentHours}:${currentMinutes}:${currentSeconds}`;
-            console.log('Current time:', formattedTime);
+            // console.log('Current time:', formattedTime);
 
             const fullDate = `${formattedDate} ${formattedTime}`
 

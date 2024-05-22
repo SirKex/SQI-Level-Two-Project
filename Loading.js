@@ -24,9 +24,9 @@ window.addEventListener('load', function (ev) {
     let user = JSON.parse(localStorage.getItem("UserInformation"));
     // console.log(user)
     userDisplay.innerHTML = `Hello, Mr. ${user.lastName}`
-    console.log(user.acctNumber)
+    // console.log(user.acctNumber)
     const acctNumber = user.acctNumber
-    console.log(acctNumber)
+    // console.log(acctNumber)
 
     if (acctNumber && acctNumber.toString().length > 8) {
         acctNo.innerHTML = acctNumber;
@@ -45,7 +45,7 @@ window.addEventListener('load', function (ev) {
             set(ref(db, "UserDetails/" + updatedUser.lastName), updatedUser)
                 .then(() => {
                     alert("User Information saved")
-                    console.log(updatedUser)
+                    // console.log(updatedUser)
                 })
                 .catch((error) => {
                     console.log(error);
