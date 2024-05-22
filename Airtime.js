@@ -73,9 +73,10 @@ topUp.addEventListener('click', function () {
         ...user,
         acctBalance: newBalance,
     };
+
     localStorage.setItem("UserInformation", JSON.stringify(UserInformation));
 
-    set(ref(db, "UserDetails/" + UserInformation.userName), UserInformation)
+    set(ref(db, "UserDetails/" + UserInformation.lastName), UserInformation)
     .then(() => {
         const today = new Date();
         const dd = String(today.getDate()).padStart(2, '0');
@@ -99,7 +100,7 @@ topUp.addEventListener('click', function () {
             phoneNo: phoneNo.value
         };
 
-        push(ref(db, "AirtimeHistory/" + user.userName), transaction);
+        push(ref(db, "AirtimeHistory/" + user.lastName), transaction);
 
         window.location.href = "TranSuccess.html";
     })

@@ -29,6 +29,7 @@ onValue(userRef, (userInfo) => {
     const userdetails = userInfo.val()
     localStorage.setItem("UserInformation", JSON.stringify(userdetails))
     let balAnce = document.getElementById("balAnce");
+    console.log(userdetails)
     balAnce.innerHTML = userdetails.acctBalance; 
 })
 

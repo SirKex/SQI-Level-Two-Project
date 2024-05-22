@@ -63,9 +63,9 @@ transFer.addEventListener('click', function () {
     };
 
     // Update both users' balances in the database
-    set(ref(db, "UserDetails/" + newInformation.userName), newInformation)
+    set(ref(db, "UserDetails/" + newInformation.lastName), newInformation)
         .then(() => {
-            set(ref(db, "UserDetails/" + UserInformation.userName), UserInformation);
+            set(ref(db, "UserDetails/" + UserInformation.lastName), UserInformation);
             
             const today = new Date();
             const dd = String(today.getDate()).padStart(2, '0');
@@ -94,10 +94,10 @@ transFer.addEventListener('click', function () {
             };
 
             // Save transaction history for the sender
-            push(ref(db, "TransactionHistory/" + UserInformation.userName), transaction)
+            push(ref(db, "TransactionHistory/" + UserInformation.lastName), transaction)
                 .then(() => {
                     // Save transaction history for the recipient
-                    push(ref(db, "TransactionHistory/" + newInformation.userName), transaction)
+                    push(ref(db, "TransactionHistory/" + newInformation.lastName), transaction)
                         .then(() => {
                             window.location.href = "TranSuccess.html";
                             localStorage.setItem("TransHistory", JSON.stringify(transaction));

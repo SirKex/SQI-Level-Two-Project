@@ -22,10 +22,10 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 let user = JSON.parse(localStorage.getItem("UserInformation"));
-const userName = user.userName;
+const lastName = user.lastName;
 const transactionList = document.getElementById("transactionList");
 
-const transactionsRef = ref(db, `TransactionHistory/${userName}`)
+const transactionsRef = ref(db, `TransactionHistory/${lastName}`)
 onValue(transactionsRef, (tranHistory) => {
     const transactions = tranHistory.val()
     if (transactions) {
@@ -44,7 +44,7 @@ onValue(transactionsRef, (tranHistory) => {
         }
 });
 
-const airtimeRef = ref(db, `AirtimeHistory/${userName}`)
+const airtimeRef = ref(db, `AirtimeHistory/${lastName}`)
 onValue(airtimeRef, (tranHistory) => {
     const trans = tranHistory.val()
     if (trans) {

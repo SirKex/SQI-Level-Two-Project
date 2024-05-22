@@ -60,15 +60,16 @@ swiftPay.addEventListener('click', function () {
 let userInt = JSON.parse(localStorage.getItem("UserInformation"));
 
 checkUser.addEventListener('click', function () {
-    const acctNumber = acctNo.value;
+    const acctNumber = Number(acctNo.value);
+    const ownAcct = Number(userInt.acctNumber)
 
     if (selectBank.innerHTML !== "SwiftPay") {
         acctName.innerHTML = "";
         return alert ("User not found")
     } else if (acctNumber.length < 9) {
         return alert("Recepient account number is invalid")
-    } else if (acctNumber === user.acctNumber) {
-        return alert ("Cannot transfer to same account")
+    } else if (acctNumber === ownAcct) {
+        return alert ("Recepient account cannot be same as own account")
     }
 
     console.log("AcctNo:", acctNumber);
