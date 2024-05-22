@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getDatabase, onValue, ref, set } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import { getDatabase, ref, set, push } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBs8xzZ_NImJb45cGgURPSfsYP42hn5yNw",
@@ -18,7 +18,7 @@ const db = getDatabase(app);
 let backArrow = document.getElementById("backArrow");
 
 backArrow.addEventListener('click', function () {
-    window.location.href = "Transfer.html"
+    window.location.href = "Transfer.html";
 });
 
 let foundUser = JSON.parse(localStorage.getItem("foundUser"));
@@ -26,7 +26,7 @@ console.log(foundUser);
 const balance = foundUser.acctBalance;
 
 let user = JSON.parse(localStorage.getItem("UserInformation"));
-console.log(user)
+console.log(user);
 const userBalance = user.acctBalance;
 
 let amountInput = document.getElementById("amount");
@@ -35,50 +35,85 @@ let traN = document.getElementById("traN");
 let transFer = document.getElementById("transFer");
 
 transFer.addEventListener('click', function () {
-    const amount = Number(amountInput.value)
+    const amount = Number(amountInput.value);
     const tranPin = inp.value;
 
     if (amount < 100) {
-        return alert ("Amount cannot be less than #100")
-    } else if (amount > balance) {
-        return alert ("Insufficient funds")
+        return alert("Amount cannot be less than #100");
+    } else if (amount > userBalance) {
+        return alert("Insufficient funds");
     } else if (tranPin !== user.transactionPin) {
-        return alert ("The transaction pin is incorrect")
+        return alert("The transaction pin is incorrect");
     } else if (traN.value.length < 1) {
-        return alert ("Please input tranfer narration")
+        return alert("Please input transfer narration");
     }
 
     let newuserBalance = userBalance - amount;
     const newBalance = balance + amount;
 
     let UserInformation = {
-        firstName: user.firstName,
-        lastName: user.lastName,
-        userName: user.userName,
-        email: user.email,
-        password: user.password,
-        acctNumber: user.acctNumber,
+        ...user,
         acctBalance: newuserBalance,
-        transactionPin: user.transactionPin
     };
-    localStorage.setItem("UserInformation", JSON.stringify(UserInformation))
+    localStorage.setItem("UserInformation", JSON.stringify(UserInformation));
 
     let newInformation = {
-        firstName: foundUser.firstName,
-        lastName: foundUser.lastName,
-        userName: foundUser.userName,
-        email: foundUser.email,
-        password: foundUser.password,
-        acctNumber: foundUser.acctNumber,
+        ...foundUser,
         acctBalance: newBalance,
-        transactionPin: foundUser.transactionPin
-    }; 
-                
+    };
+
+    // Update both users' balances in the database
     set(ref(db, "UserDetails/" + newInformation.userName), newInformation)
-    .then(() => {
-        window.location.href = "TranSuccess.html"
-    }) .catch((error) => {
-        console.log(error)
-        return alert("Transfer failed")
-    });
-})
+        .then(() => {
+            set(ref(db, "UserDetails/" + UserInformation.userName), UserInformation);
+            
+            const today = new Date();
+            const dd = String(today.getDate()).padStart(2, '0');
+            const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+            const yyyy = today.getFullYear();
+            const formattedDate = mm + '/' + dd + '/' + yyyy;
+            console.log('Current date:', formattedDate);
+
+            const date = new Date();
+            const currentHours = date.getHours();
+            const currentMinutes = date.getMinutes();
+            const currentSeconds = date.getSeconds();
+            const formattedTime = `${currentHours}:${currentMinutes}:${currentSeconds}`;
+            console.log('Current time:', formattedTime);
+
+            const fullDate = `${formattedDate} ${formattedTime}`
+
+            // Log the transaction history
+            const transaction = {
+                type: "Transfer",
+                from: UserInformation.userName,
+                to: newInformation.userName,
+                amount: amount,
+                narration: traN.value,
+                date: fullDate
+            };
+
+            // Save transaction history for the sender
+            push(ref(db, "TransactionHistory/" + UserInformation.userName), transaction)
+                .then(() => {
+                    // Save transaction history for the recipient
+                    push(ref(db, "TransactionHistory/" + newInformation.userName), transaction)
+                        .then(() => {
+                            window.location.href = "TranSuccess.html";
+                            localStorage.setItem("TransHistory", JSON.stringify(transaction));
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                            alert("Transfer failed");
+                        });
+                })
+                .catch((error) => {
+                    console.log(error);
+                    alert("Transfer failed");
+                });
+        })
+        .catch((error) => {
+            console.log(error);
+            alert("Transfer failed");
+        });
+});

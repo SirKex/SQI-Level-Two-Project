@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getDatabase, onValue, ref, set } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import { getDatabase, onValue, ref } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBs8xzZ_NImJb45cGgURPSfsYP42hn5yNw",
@@ -60,26 +60,6 @@ showPass.addEventListener('click', function () {
     hidePass.style.display = "inline"
     showPass.style.display = "none"
 })
-
-let UserInformation = {
-    firstName: user.firstName,
-    lastName: user.lastName,
-    userName: user.userName,
-    email: user.email,
-    password: user.password,
-    acctNumber: user.acctNumber,
-    acctBalance: user.acctBalance,
-    transactionPin: user.transactionPin
-};
-
-// console.log(UserInformation);
-set(ref(db, "UserDetails/" + UserInformation.userName), UserInformation)
-    .then(() => {
-        // console.log(UserInformation)
-    })
-    .catch((error) => {
-        alert("Error Occured while saving data");
-    });
 
 //Functions
 //Transfer Funds
