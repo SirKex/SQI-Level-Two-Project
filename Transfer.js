@@ -21,8 +21,8 @@ backArrow.addEventListener('click', function () {
     window.location.href = "Dashboard.html"
 });
 
-const acctNo = "834513698";
-// const acctNo = document.getElementById("acctNumber").value;
+// const acctNo = "834513698";
+const acctNo = document.getElementById("acctNo");
 let checkUser = document.getElementById("checkUser");
 let transFer = document.getElementById("transFer");
 let acctName = document.getElementById("acctName");
@@ -59,15 +59,17 @@ swiftPay.addEventListener('click', function () {
 })
 
 checkUser.addEventListener('click', function () {
+    const acctNumber = acctNo.value;
+
     if (selectBank.innerHTML !== "SwiftPay") {
         acctName.innerHTML = "";
         return alert ("User not found")
     }
-    // else if (acctNo.length < 9) {
-    //     return alert("Recepient account number is invalid")
-    // }
+    else if (acctNumber.length < 9) {
+        return alert("Recepient account number is invalid")
+    }
 
-    console.log("AcctNo:", acctNo);
+    console.log("AcctNo:", acctNumber);
 
     const userRef = ref(db, `UserDetails`)
     onValue(userRef, (userInfo) => {
@@ -86,7 +88,7 @@ checkUser.addEventListener('click', function () {
             return null;
         }
 
-        const foundUser = findUserByAcctNumber(acctNo);
+        const foundUser = findUserByAcctNumber(acctNumber);
         console.log("Found User:", foundUser);
         acctName.innerHTML = `${foundUser.firstName} ${foundUser.lastName}`;
 
@@ -94,10 +96,6 @@ checkUser.addEventListener('click', function () {
     });
 
     transFer.addEventListener('click', function () {
-            if (acctName.innerHTML.length < 5) {
-                return alert("Please check user first");
-            } else {
-                window.location.href = "Transfer2.html";
-            }
+            window.location.href = "Transfer2.html";
         });
 });

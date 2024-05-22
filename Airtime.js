@@ -30,21 +30,26 @@ let user = JSON.parse(localStorage.getItem("UserInformation"));
 let acctBalance = user.acctBalance;
 let phoneNo = document.getElementById("phoneNo");
 let airTime = document.getElementById("airTime");
+let inp = document.getElementById("tranPin");
 let topUp = document.getElementById("topUp");
 
 topUp.addEventListener('click', function () {
+    const tranPin = inp.value;
+
     if (phoneNo.length < 10) {
         return alert ("Phone number is not valid")
     } else if (airTime.value < 50) {
         return alert ("Amount cannot be less than #50")
     } else if (airTime.value > acctBalance) {
         return alert ("Insufficient funds")
+    } else if (tranPin !== user.transactionPin) {
+        return alert ("The transaction pin is incorrect")
     }
 
     let newBalance = acctBalance - airTime.value
     alert ("Your airtime purchase is successful")
 
-    let UserInformation = {
+     let UserInformation = {
         firstName: user.firstName,
         lastName: user.lastName,
         userName: user.userName,
@@ -52,7 +57,7 @@ topUp.addEventListener('click', function () {
         password: user.password,
         acctNumber: user.acctNumber,
         acctBalance: newBalance,
+        transactionPin: user.transactionPin
     };
-    // console.log(newBalance)
     localStorage.setItem("UserInformation", JSON.stringify(UserInformation))
 })

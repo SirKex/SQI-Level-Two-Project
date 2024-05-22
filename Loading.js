@@ -12,8 +12,8 @@ const firebaseConfig = {
     measurementId: "G-XSLF84G9DK"
 };
 
-let userDisplay = document.getElementById("userDisplay")
-let acctNo = document.getElementById("acctNo")
+let userDisplay = document.getElementById("userDisplay");
+let acctNo = document.getElementById("acctNo");
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
@@ -21,18 +21,15 @@ const db = getDatabase(app);
 window.addEventListener('load', function (ev) {
     ev.preventDefault()
 
-    let user = JSON.parse(localStorage.getItem('UserInformation'));
+    let user = JSON.parse(localStorage.getItem("UserInformation"));
     // console.log(user)
     userDisplay.innerHTML = `Hello, Mr. ${user.lastName}`
+    console.log(user.acctNumber)
+    const acctNumber = `${user.acctNumber}`
 
-    if (user.acctNumber > 8) {
-        acctNo.innerHTML = user.acctNumber;
-    }
-    else if (acctNo.innerHTML < 8) {
-        let user = JSON.parse(localStorage.getItem('UserInformation'));
-        // console.log(user)
-        userDisplay.innerHTML = `Hello, Mr. ${user.lastName}`
-
+    if (acctNumber.length > 8) {
+        acctNo.innerHTML = acctNumber;
+    } else if (acctNumber.length < 8) {
         let firstInterval = setInterval(() => {
             let x = Math.floor((Math.random(0o0) * 999999999) + 1);
             acctNo.innerHTML = x;
@@ -46,10 +43,12 @@ window.addEventListener('load', function (ev) {
                 acctNumber: x,
                 acctBalance: 20000,
             };
+
             // console.log(UserInformation);
             set(ref(db, "UserDetails/" + UserInformation.userName), UserInformation)
                 .then(() => {
                     alert("User Information saved")
+                    console.log(UserInformation)
                 })
                 .catch((error) => {
                     alert("Error Occured while saving data");
@@ -67,5 +66,5 @@ window.addEventListener('load', function (ev) {
 })
 
 nextBtn.addEventListener('click', () => {
-    window.location.href = "Dashboard.html";
+    window.location.href = "SetPin.html";
 })

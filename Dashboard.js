@@ -15,8 +15,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-let userDisplay = document.getElementById("userDisplay")
-let imgOne = document.getElementById("imgOne")
+let userDisplay = document.getElementById("userDisplay");
+let imgOne = document.getElementById("imgOne");
+let settIngs = document.getElementById("settIngs");
 
 let user = JSON.parse(localStorage.getItem("UserInformation"));
 // console.log(user)
@@ -33,6 +34,10 @@ onValue(userRef, (userInfo) => {
 
 imgOne.addEventListener('click', function() {
     window.location.href = "Profile.html"
+})
+
+settIngs.addEventListener('click', function () {
+    window.location.href = "Settings.html"
 })
 
 window.addEventListener('load', function () {
@@ -64,6 +69,7 @@ let UserInformation = {
     password: user.password,
     acctNumber: user.acctNumber,
     acctBalance: user.acctBalance,
+    transactionPin: user.transactionPin
 };
 
 // console.log(UserInformation);

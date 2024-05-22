@@ -29,20 +29,24 @@ let user = JSON.parse(localStorage.getItem("UserInformation"));
 console.log(user)
 const userBalance = user.acctBalance;
 
-let amount = 3000;
-// let amount = document.getElementById("amount")
-let tranPin = document.getElementById("tranPin")
-let transFer = document.getElementById("transFer")
+let amountInput = document.getElementById("amount");
+let inp = document.getElementById("tranPin");
+let traN = document.getElementById("traN");
+let transFer = document.getElementById("transFer");
 
 transFer.addEventListener('click', function () {
+    const amount = Number(amountInput.value)
+    const tranPin = inp.value;
+
     if (amount < 100) {
         return alert ("Amount cannot be less than #100")
     } else if (amount > balance) {
         return alert ("Insufficient funds")
+    } else if (tranPin !== user.transactionPin) {
+        return alert ("The transaction pin is incorrect")
+    } else if (traN.value.length < 1) {
+        return alert ("Please input tranfer narration")
     }
-    // else if (tranPin !== transactionPin) {
-    //     return alert ("The transaction pin is incorrect")
-    // }
 
     let newuserBalance = userBalance - amount;
     const newBalance = balance + amount;
@@ -55,6 +59,7 @@ transFer.addEventListener('click', function () {
         password: user.password,
         acctNumber: user.acctNumber,
         acctBalance: newuserBalance,
+        transactionPin: user.transactionPin
     };
     localStorage.setItem("UserInformation", JSON.stringify(UserInformation))
 
@@ -66,6 +71,7 @@ transFer.addEventListener('click', function () {
         password: foundUser.password,
         acctNumber: foundUser.acctNumber,
         acctBalance: newBalance,
+        transactionPin: foundUser.transactionPin
     }; 
                 
     set(ref(db, "UserDetails/" + newInformation.userName), newInformation)
