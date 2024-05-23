@@ -93,7 +93,7 @@ checkUser.addEventListener('click', function () {
 
         const foundUser = findUserByAcctNumber(acctNumber);
         console.log("Found User:", foundUser);
-        acctName.innerHTML = `${foundUser.firstName} ${foundUser.lastName}`;
+        acctName.innerHTML = `<span class="text-uppercase">${foundUser.firstName} ${foundUser.lastName}</span>`;
 
         localStorage.setItem("foundUser", JSON.stringify(foundUser))
     });

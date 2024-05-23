@@ -82,12 +82,14 @@ transFer.addEventListener('click', function () {
             // console.log('Current time:', formattedTime);
 
             const fullDate = `${formattedDate} ${formattedTime}`
+            const sender = `${UserInformation.firstName} ${UserInformation.lastName}`
+            const recipient = `${foundUser.firstName} ${foundUser.lastName}`
 
             // Log the transaction history
             const transaction = {
                 type: "Transfer",
-                from: UserInformation.userName,
-                to: newInformation.userName,
+                from: sender,
+                to: recipient,
                 amount: amount,
                 narration: traN.value,
                 date: fullDate
