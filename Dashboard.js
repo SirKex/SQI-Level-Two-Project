@@ -33,6 +33,8 @@ onValue(userRef, (userInfo) => {
     balAnce.innerHTML = userdetails.acctBalance; 
 })
 
+let userInt = JSON.parse(localStorage.getItem("UserInformation"));
+
 imgOne.addEventListener('click', function() {
     window.location.href = "Profile.html"
 })
@@ -57,7 +59,7 @@ hidePass.addEventListener('click', function () {
 })
 
 showPass.addEventListener('click', function () {
-    balAnce.innerHTML = user.acctBalance
+    balAnce.innerHTML = userInt.acctBalance
     hidePass.style.display = "inline"
     showPass.style.display = "none"
 })
