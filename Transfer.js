@@ -77,13 +77,13 @@ checkUser.addEventListener('click', function () {
     const userRef = ref(db, `UserDetails`)
     onValue(userRef, (userInfo) => {
         const userdetails = [userInfo.val()]
-        // console.log("Userdetails:", userdetails);
+        console.log("Userdetails:", userdetails);
 
         function findUserByAcctNumber(acctNumber) {
             for (const lastName in userdetails[0]) {
                 if (userdetails[0].hasOwnProperty(lastName)) {
                     const user = userdetails[0][lastName];
-                    if (user.acctNumber.toString() === acctNumber) {
+                    if (user.acctNumber === acctNumber) {
                         return user;
                     }
                 }
@@ -92,7 +92,7 @@ checkUser.addEventListener('click', function () {
         }
 
         const foundUser = findUserByAcctNumber(acctNumber);
-        // console.log("Found User:", foundUser);
+        console.log("Found User:", foundUser);
         acctName.innerHTML = `${foundUser.firstName} ${foundUser.lastName}`;
 
         localStorage.setItem("foundUser", JSON.stringify(foundUser))
