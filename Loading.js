@@ -23,7 +23,7 @@ window.addEventListener('load', function (ev) {
 
     let user = JSON.parse(localStorage.getItem("UserInformation"));
     // console.log(user)
-    userDisplay.innerHTML = `Hello, Mr. ${user.lastName}`
+    userDisplay.innerHTML = `Hello, ${user.firstName}`
     // console.log(user.acctNumber)
     const acctNumber = user.acctNumber
     // console.log(acctNumber)

@@ -53,7 +53,7 @@ let topUp = document.getElementById("topUp");
 
 topUp.addEventListener('click', function () {
     const tranPin = inp.value;
-    const amount = Number(airTime.value);
+    const amount = airTime.value;
 
     if (phoneNo.value.length < 10) {
         return alert("Phone number is not valid");

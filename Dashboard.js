@@ -22,7 +22,7 @@ let settIngs = document.getElementById("settIngs");
 let user = JSON.parse(localStorage.getItem("UserInformation"));
 // console.log(user)
 const lastName = user.lastName;
-userDisplay.innerHTML = `Hi, Mr. ${user.lastName}`;
+userDisplay.innerHTML = `Hi, ${user.firstName}`;
 
 const userRef = ref(db, `UserDetails/${lastName}`)
 onValue(userRef, (userInfo) => {
